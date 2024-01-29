@@ -264,9 +264,13 @@ public class MTIVideoComposition {
             }
         }
         
-        let sourcePixelBufferAttributes: [String : Any]? = [kCVPixelBufferPixelFormatTypeKey as String: [kCVPixelFormatType_420YpCbCr8BiPlanarFullRange, kCVPixelFormatType_32BGRA, kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange]]
+        let requiredPixelBufferAttributesForRenderContext: [String: Any] = [
+            String(kCVPixelBufferPixelFormatTypeKey): NSNumber(integerLiteral: Int(kCVPixelFormatType_32BGRA)),
+            String(kCVPixelBufferIOSurfacePropertiesKey): [:] as AnyObject,
+            String(kCVPixelBufferMetalCompatibilityKey): NSNumber(booleanLiteral: true)
+        ]
         
-        let requiredPixelBufferAttributesForRenderContext: [String : Any] = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA]
+        let sourcePixelBufferAttributes: [String : Any]? = [kCVPixelBufferPixelFormatTypeKey as String: [kCVPixelFormatType_420YpCbCr8BiPlanarFullRange, kCVPixelFormatType_32BGRA, kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange]]
         
         private var pendingRequests: Set<VideoCompositionRequest> = []
         private let pendingRequestsLock = MTILockCreate()
